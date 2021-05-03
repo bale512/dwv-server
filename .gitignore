@@ -1,0 +1,19 @@
+.idea
+.vscode
+__pycache__/
+logs
+dataset
+annotation
+process
+mask
+*.pid
+# dwv/
+# !static/dwv
+!static/dwv/node_modules
+# !static/dwv/node_modules/dwv
+rlseg/Brats
+rlseg/brats_result
+rlseg/testData
+rlseg/result
+rl_resluts
+static/_temp/*
