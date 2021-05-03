@@ -10,9 +10,8 @@ import hashlib
 import os
 import sys
 
+
 # 保存进程PID到PID文件
-
-
 def save_pid(path, pid):
     with open(path, 'w') as fp:
         fp.write(str(pid))
@@ -37,9 +36,8 @@ def start_daemon_service(func, pid_file):
         logger.info('controller process started at PID: ' + str(pid))
         save_pid(pid_file, pid)
 
+
 # 关闭服务进程
-
-
 def shutdown_service(pid_path):
     command = 'kill -9 `cat ' + pid_path + '`;rm -f ' + pid_path
     os.system(command)

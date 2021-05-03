@@ -67,6 +67,15 @@ def upload_file():
         return jsonify(result)
 
 
+# 强化预测
+@app.route('/api/RLsegment', methods=['POST'])
+def rl_predict():
+    print(request.method)
+    hints = request.values['hints']
+    print(hints)
+    dir = request.values['dir']
+
+
 def run():
     app.run(debug=sys_config.DEBUG, host='0.0.0.0',
             port=sys_config.SERVER_PORT, threaded=True)
