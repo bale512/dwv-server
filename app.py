@@ -68,12 +68,14 @@ def upload_file():
 
 
 # 强化预测
-@app.route('/api/RLsegment', methods=['POST'])
+@app.route('/api/rlSegment', methods=['POST'])
 def rl_predict():
-    print(request.method)
-    hints = request.values['hints']
+    hints = request.json.get('hints')
+    dir = request.json.get('dir')
     print(hints)
-    dir = request.values['dir']
+    print(dir)
+    # TODO
+    # 模型预测，以及返回预测结果
 
 
 def run():
