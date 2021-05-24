@@ -9,12 +9,13 @@ from werkzeug.utils import secure_filename
 import utils.tool as tool
 from flask_cors import CORS
 
+
 UPLOAD_FOLDER = os.path.join(
     os.path.dirname(os.path.relpath(__file__)),
     sys_config.DICM_SAVE_PATH)
 ALLOWED_EXTENSIONS = set(['zip'])
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='public')
 # 解决跨域
 CORS(app, supports_credentials=True)
 app.config.from_object('config')
@@ -55,7 +56,7 @@ def upload_file():
             os.path.join(UPLOAD_FOLDER, filename), 'r')
         zip_ref.extractall(os.path.join(UPLOAD_FOLDER, hash))
         # 解压后各个文件的路径
-        dcmList = [os.path.join(sys_config.HOST_NAME, UPLOAD_FOLDER, hash, x.filename)
+        dcmList = [os.path.join(UPLOAD_FOLDER, hash, x.filename)
                    for x in zip_ref.filelist]
         zip_ref.close()
 
