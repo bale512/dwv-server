@@ -8,6 +8,7 @@ from flask import Flask, request, redirect, url_for, flash, render_template, jso
 from werkzeug.utils import secure_filename
 import utils.tool as tool
 from flask_cors import CORS
+import RL.predict as Predict
 
 
 UPLOAD_FOLDER = os.path.join(
@@ -22,6 +23,10 @@ app.config.from_object('config')
 
 # 创建一个锁
 mu = threading.Lock()
+
+# RL预测模型
+# rlPredict = Predict(
+#     model_with_crop_path=r"/home/jiayoutao/mailrlseg/segmention/rlseg/hsresult/pnet_high_level_enhanced/pnet_high_level_enhanced_499.pth")
 
 
 def allowed_file(filename):
@@ -75,8 +80,18 @@ def rl_predict():
     dir = request.json.get('dir')
     print(hints)
     print(dir)
-    # TODO
+    result = dict()
+    result['msg'] = 'success'
+    result['code'] = 0
     # 模型预测，以及返回预测结果
+    if len(hints) == 0:
+        result['data'] = rlPredict.predict_with_crop(dcm_list_path=dir, information_path="liyulong_t1c_information",
+                                                     output_path=os.path.join(dir, 'predict'))
+    else:
+        result['data'] = rlPredict.second_model_inference(
+            dir, os.path.join(dir, 'predict'), "liyulong_t1c_information", hints)
+
+    return jsonify(result)
 
 
 def run():
